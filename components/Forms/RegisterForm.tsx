@@ -1,12 +1,11 @@
 'use client';
 
-import React, { ChangeEventHandler, FC } from 'react';
+import React, { ChangeEventHandler, FC, useState } from 'react';
 import Image from '@/node_modules/next/image';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Btn from '@/UI/Btn/Btn';
 import { RegisterFormData } from '@/@types';
 import './styles.scss';
-import avatar from '@/public/avatar_private.png';
 
 type RegisterFormProps = {
   title: string;
@@ -20,6 +19,9 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
   } = useForm<RegisterFormData>({
     mode: 'onChange',
   });
+  const [avatar, setAvatar] = useState<string>(
+    'https://ljmmwchckmvdxqxfvuor.supabase.co/storage/v1/object/public/avatars/avatar_private.png?t=2023-11-23T12%3A59%3A30.533Z'
+  );
 
   const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
     const createFormData = {
@@ -28,7 +30,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
       options: {
         data: {
           fullname: data.fullname,
-          //   avatarUrl: avatar,
+          avatarUrl: avatar,
         },
       },
     };
@@ -41,6 +43,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ title }) => {
   ) => {
     const avatarFile = event.target.files[0];
     // dispatch(uploadAvatar(avatarFile));
+    console.log(avatarFile);
   };
 
   return (
